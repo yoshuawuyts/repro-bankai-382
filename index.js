@@ -15,6 +15,17 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(store)
 
+app.use((state, emitter) => {
+  window.fetch('/assets/icon.png')
+    .then((res) => {
+      console.log('ok', res.ok)
+      console.log(res)
+    })
+    .catch((err) => {
+      emitter.emit('log:error', err)
+    })
+})
+
 app.route('/', require('./views/main'))
 app.route('/*', require('./views/404'))
 
